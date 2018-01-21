@@ -1,0 +1,129 @@
+
+
+	
+			<div id="menu">
+				<div id= "menuScelta">
+					<button class="close" onclick="closeMenu('menu', 'menuScelta')">x</button>
+					<a href="#" onclick="switchMenu('menuScelta', 'menuL')">Località</a>
+					<a href="#"  onclick="switchMenu('menuScelta', 'menuG')">Genere</a>
+					<a href="info.jsp">Info</a>
+				</div>
+				
+				<div id= "menuL">
+					<button class="close" onclick="closeMenu('menu', 'menuL')">x</button>
+					<button class="back" onclick="switchMenu('menuL', 'menuScelta')">&laquo;</button>
+					<a href="ServLocalita?localita=Milano">Milano</a>
+					<a href="ServLocalita?localita=Roma">Roma</a>
+					<a href="ServLocalita?localita=Torino">Torino</a>
+					<a href="ServLocalita?localita=Bologna">Bologna</a>
+					<a href="ServLocalita?localita=Napoli">Napoli</a>
+					<a href="ServLocalita?localita=Firenze">Firenze</a>
+					<a href="ServLocalita?localita=Bari">Bari</a>
+					<form class="formMenu" method="get" action="ServLocalita">
+						<input type="text" name="localita" placeholder="Ricerca per località">
+						<button type="submit"><i class="material-icons">search</i></button>
+					</form>
+				</div>
+			
+				<div id="menuG">
+					<button class="close" onclick="closeMenu('menu', 'menuG')">x</button>
+					<button class="back" onclick="switchMenu('menuG', 'menuScelta')" >&laquo;</button>
+					<a href="ServGenere?genere=Rock">Rock</a>
+					<a href="ServGenere?genere=Metal">Metal</a>
+					<a href="ServGenere?genere=Rap">Rap</a>
+					<a href="ServGenere?genere=Pop">Pop</a>
+					<a href="ServGenere?genere=Jazz">Jazz</a>
+					<a href="ServGenere?genere=Blues">Blues</a>
+					<a href="ServGenere?genere=Classica">Classica</a>
+					<form class="formMenu" action="ServGenere" method="get">
+						<input type="text" name="genere" placeholder="Ricerca per genere">
+						<button type="submit"><i class="material-icons">search</i></button>
+					</form>
+				</div>
+			</div>
+			<header>
+				<nav>
+					<div id="localita">
+						<button id="btnLi">Località<i class="material-icons">keyboard_arrow_down</i></button>
+						<div id= "TendinaLi">
+							<a href="ServLocalita?localita=Milano">Milano</a>
+							<a href="ServLocalita?localita=Roma">Roma</a>
+							<a href="ServLocalita?localita=Torino">Torino</a>
+							<a href="ServLocalita?localita=Bologna">Bologna</a>
+							<a href="ServLocalita?localita=Napoli">Napoli</a>
+							<a href="ServLocalita?localita=Firenze">Firenze</a>
+							<a href="ServLocalita?localita=Bari">Bari</a>
+							<form class="formInt" method="get" action="ServLocalita">
+								<input type="text" name="localita" placeholder="Ricerca per località">
+								<button type="submit"><i class="material-icons">search</i></button>
+							</form>
+						</div>
+					</div>
+					
+					<div id="genere">
+						<button id="btnG">Genere<i class="material-icons">keyboard_arrow_down</i></button>	
+						<div id="TendinaGi">
+							<a href="ServGenere?genere=Rock" id="rock">Rock</a>
+							<a href="ServGenere?genere=Metal">Metal</a>
+							<a href="ServGenere?genere=Rap">Rap</a>
+							<a href="ServGenere?genere=Pop">Pop</a>
+							<a href="ServGenere?genere=Jazz">Jazz</a>
+							<a href="ServGenere?genere=Blues">Blues</a>
+							<a href="ServGenere?genere=Classica">Classica</a>
+							<form class="formInt" action="ServGenere" method="get">
+								<input type="text" name="genere" placeholder="Ricerca per genere">
+								<button type="submit"><i class="material-icons">search</i></button>
+							</form>
+						</div>
+					</div> 
+					
+					<button id="menuBtn" onclick="openMenu('menu', 'menuScelta')"><i class="material-icons">menu</i></button>
+					
+					<form onSubmit="return cerca(this);" action="ServArtista" method="get">
+						<input class="input" type="text" name="nome" placeholder="Ricerca Artista">
+						<button class="cerca" type="submit"><i class="material-icons">search</i>Cerca</button>
+					</form>
+					
+					<div id="gruppo">
+						<button id="carrello" onclick="location.href='Carrello.jsp'"><i class="material-icons">shopping_cart</i>Carrello</button>
+						<%if(user.isAutenticate())
+						{%>
+							<button id="logout" onclick="logoutF()"><i class="material-icons">person</i>Logout</button>
+						<%}else{ %>
+							<button id="login" onclick="login()"><i class="material-icons">person</i>Login</button>
+						<%} %>
+					</div>
+				</nav>
+				<button id="home" onclick="location.href='index.jsp'"></button>
+				<button id="infoBtn" onclick="location.href='info.jsp'"><i class="material-icons">info</i></button>
+			</header>
+			
+			<div id="TendinaLogin">
+				<form method="post" onSubmit="return validateFormLogin(this);" action="ServLogin">
+					<p>UserName:</p>
+					<input class="username" type="text" name="username" minlength="5" placeholder="Inserisci UserName" required><br/>
+					<p>Password:</p>
+					<input class="password" type="password" name="password" minlenght="8" maxlenght="60" placeholder="Inserisci Password" required><br/>
+					<button id="accedi" type="submit">Accedi</button><br/>
+					<span>Nuovo cliente? </span>
+					<a href="registrazione.jsp">Registrati</a>
+				</form>
+			</div>
+			
+			<div id="TendinaLogout">
+				<form method="get" action="ServLogout">
+					 <br/>
+					<a href="infoAccount.jsp">Informazioni Account</a> <br/> <br/>
+					<a href="cambioPwd.jsp?err=false">Cambia Password</a> <br/>  <br/>
+					<%if(user.isAdminUtenti())
+					{%>
+						<a href="utenti.jsp">Utenti...</a> <br/>  <br/>
+					<%} %>
+					<%if(user.isAdminConcerti())
+					{%>
+						<a href="CreaArtista.jsp">Aggiungi...</a> <br/>  <br/>
+						<a href="elimina.jsp">Elimina...</a> <br/>  <br/>
+					<%} %>
+					<button id="logoutBtn" type="submit">Logout</button><br/>
+				</form>
+			</div>
